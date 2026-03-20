@@ -16,6 +16,7 @@ from pathlib import Path
 
 _CONFIG_PATH = Path(__file__).resolve().parents[2] / "config" / "config.json"
 
+
 def _load_log_config() -> dict:
     """Load logging settings from config.json, fall back to safe defaults."""
     try:

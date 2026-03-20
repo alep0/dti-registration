@@ -31,6 +31,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 def _make_brain_4d(shape=(10, 10, 10, 5)):
     return np.random.rand(*shape).astype(np.float32)
 
+
 def _make_mask_3d(shape=(10, 10, 10), fill=1):
     mask = np.ones(shape, dtype=np.float32) * fill
     # Simulate skull: zero the outermost voxel shell
