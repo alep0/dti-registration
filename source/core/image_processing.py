@@ -24,7 +24,6 @@ from source.utils.validators import (
     ensure_directory,
     require_args,
 )
-from source.utils.config_loader import load_config
 
 log = get_logger(__name__)
 

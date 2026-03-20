@@ -10,9 +10,21 @@ Run with:
 import numpy as np
 import pytest
 import tempfile
-import os
 from pathlib import Path
-from unittest.mock import patch, MagicMock
+
+# ── Import under test ─────────────────────────────────────────────────────────
+
+import sys
+
+from source.utils.validators import ValidationError
+from source.core.image_processing import (
+    _apply_mask,
+    _transform_silvia,
+    _transform_standard,
+    OP_SILVIA,
+)
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -25,22 +37,6 @@ def _make_mask_3d(shape=(10, 10, 10), fill=1):
     mask[0, :, :] = 0
     mask[-1, :, :] = 0
     return mask
-
-
-# ── Import under test ─────────────────────────────────────────────────────────
-
-import sys
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-
-from source.core.image_processing import (
-    _apply_mask,
-    _transform_silvia,
-    _transform_standard,
-    OP_SILVIA,
-    OP_STANDARD,
-)
-from source.utils.validators import ValidationError
-
 
 # ── Tests: _apply_mask ────────────────────────────────────────────────────────
 

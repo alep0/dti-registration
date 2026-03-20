@@ -13,8 +13,7 @@ import tempfile
 from pathlib import Path
 import sys
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-
+from source.utils.validators import ValidationError
 from source.core.bvec_bval_converter import (
     read_bval,
     read_bvec_with_sign_correction,
@@ -22,8 +21,8 @@ from source.core.bvec_bval_converter import (
     _SIGN_CORRECTIONS,
     _N_DIRS,
 )
-from source.utils.validators import ValidationError
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 # ── Fixtures ──────────────────────────────────────────────────────────────────
 

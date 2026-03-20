@@ -9,7 +9,6 @@ directory defined in config.json.
 """
 
 import logging
-import os
 import sys
 import json
 from datetime import datetime

@@ -13,8 +13,6 @@ import pytest
 import tempfile
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-
 from source.utils.config_loader import load_config, get, ConfigError
 from source.utils.validators import (
     ValidationError,
@@ -25,6 +23,7 @@ from source.utils.validators import (
     ensure_directory,
 )
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 # ── config_loader tests ───────────────────────────────────────────────────────
 
