@@ -1,0 +1,65 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# .gitignore – DTI Registration Pipeline
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Data and results (too large / experiment-specific) ───────────────────────
+data/nifti/
+data/maps/
+data/tract/
+results/
+logs/
+
+# Keep data/standard placeholder but not actual atlas files
+data/standard/*.nii.gz
+data/standard/*.nii
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.so
+pip-wheel-metadata/
+
+# ── Testing / coverage ────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.tox/
+
+# ── Conda / virtual environments ─────────────────────────────────────────────
+.conda/
+env/
+venv/
+.venv/
+
+# ── IDEs ──────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── OS ────────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Matlab ────────────────────────────────────────────────────────────────────
+*.asv
+*.m~
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+.dockerignore
+
+# ── Secrets / local config overrides ─────────────────────────────────────────
+.env
+*.local.json

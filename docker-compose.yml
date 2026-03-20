@@ -1,0 +1,47 @@
+version: "3.9"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# DTI Registration Pipeline – Docker Compose
+# ─────────────────────────────────────────────────────────────────────────────
+# Usage examples:
+#   docker compose build
+#   docker compose run --rm pipeline ./run_full_pipeline.sh 1 "R01 R02" /workspace
+#   docker compose run --rm pipeline pytest validations/ -v
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+  pipeline:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: dti-registration:1.0.0
+    container_name: dti-registration
+    working_dir: /workspace
+
+    # Mount data, results, and logs from host
+    volumes:
+      - ./data:/workspace/data:ro          # input data – read-only
+      - ./results:/workspace/results        # pipeline outputs
+      - ./logs:/workspace/logs              # log files
+      - ./config:/workspace/config:ro       # config – read-only
+
+    # Environment variables
+    environment:
+      - FSLDIR=/usr/local/fsl
+      - FSLOUTPUTTYPE=NIFTI_GZ
+      - PYTHONPATH=/workspace
+
+    # Resource limits (adjust to your machine)
+    deploy:
+      resources:
+        limits:
+          memory: 16G
+        reservations:
+          memory: 4G
+
+    # Keep container alive for interactive use
+    stdin_open: true
+    tty: true
+
+    # Default command
+    command: bash

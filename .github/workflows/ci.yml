@@ -1,0 +1,116 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  # ── Python linting and type checking ───────────────────────────────────────
+  lint:
+    name: Python lint & type check
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install lint dependencies
+        run: |
+          pip install flake8 mypy numpy
+
+      - name: Run flake8
+        run: |
+          flake8 source/ validations/ \
+            --max-line-length=100 \
+            --extend-ignore=E203,W503 \
+            --exclude=__pycache__
+
+      - name: Run mypy
+        run: |
+          mypy source/ --ignore-missing-imports --no-strict-optional
+        continue-on-error: true   # mypy failures are informational
+
+  # ── Shell script linting ────────────────────────────────────────────────────
+  shellcheck:
+    name: Shell script lint
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install shellcheck
+        run: sudo apt-get install -y shellcheck
+
+      - name: Run shellcheck
+        run: |
+          find . -name "*.sh" -not -path "./.git/*" \
+            -exec shellcheck --severity=warning {} +
+
+  # ── Unit tests ──────────────────────────────────────────────────────────────
+  test:
+    name: Unit tests (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          pip install numpy pytest pytest-cov
+          # Install dipy without C extensions for CI speed
+          pip install dipy nibabel
+
+      - name: Run tests
+        run: |
+          PYTHONPATH=. pytest validations/ \
+            -v \
+            --tb=short \
+            --cov=source \
+            --cov-report=xml \
+            --cov-report=term-missing \
+            -k "not integration"
+
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v4
+        if: matrix.python-version == '3.10'
+        with:
+          file: ./coverage.xml
+          flags: unittests
+          fail_ci_if_error: false
+
+  # ── Docker build check ──────────────────────────────────────────────────────
+  docker-build:
+    name: Docker build
+    runs-on: ubuntu-22.04
+    # Only run on main branch to save CI time
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build --no-cache -t dti-registration:ci-test .
+
+      - name: Smoke test inside Docker
+        run: |
+          docker run --rm dti-registration:ci-test \
+            python3 -c "import dipy, numpy; print('Docker smoke test OK')"

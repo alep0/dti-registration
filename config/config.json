@@ -1,0 +1,58 @@
+{
+  "project": {
+    "name": "dti-registration",
+    "version": "1.0.0",
+    "description": "DTI rat brain registration pipeline: atlas warping, tractography formatting for connectome reconstruction",
+    "authors": ["aaaguado@ifisc.uib-csic.es"],
+    "license": "See LICENSE"
+  },
+  "paths": {
+    "data_root": "data",
+    "standard_dir": "data/standard",
+    "nifti_dir": "data/nifti",
+    "maps_dir": "data/maps",
+    "tract_dir": "data/tract",
+    "results_dir": "results",
+    "logs_dir": "logs",
+    "pre_dir": "results/pre"
+  },
+  "standard_files": {
+    "brain": "brain10.nii.gz",
+    "atlas": "atlas10.nii.gz",
+    "atlas_labels": "atlas_cg_3d5_list.txt",
+    "atlas_names": "atlas_cg_3d5_names.txt"
+  },
+  "resampling": {
+    "output_size": "128x256x128",
+    "interpolation_type": 1,
+    "interpolation_method": 2,
+    "output_subdir": "results/pre/sliced_3d_masked/Standard_scaled_r/256"
+  },
+  "registration": {
+    "dimension": 3,
+    "threads": 10,
+    "transform_type": "s",
+    "interpolation": "NearestNeighbor"
+  },
+  "erosion": {
+    "kernel": "default"
+  },
+  "groups": {
+    "t1": {"label": "control", "index": 1},
+    "t2": {"label": "alcoholic", "index": 2}
+  },
+  "map_prefixes": ["AX", "FM", "FR", "MF"],
+  "bvec": {
+    "n_directions": 33,
+    "n_b0": 1
+  },
+  "logging": {
+    "level": "INFO",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    "date_format": "%Y-%m-%d %H:%M:%S"
+  },
+  "docker": {
+    "image": "dti-registration",
+    "tag": "1.0.0"
+  }
+}

@@ -1,0 +1,8 @@
+numpy>=1.23
+dipy>=1.7
+nibabel>=5.0
+scipy>=1.10
+pytest>=7.0
+pytest-cov>=4.0
+flake8>=6.0
+mypy>=1.0
