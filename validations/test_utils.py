@@ -27,6 +27,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 # ── config_loader tests ───────────────────────────────────────────────────────
 
+
 class TestLoadConfig:
     def _write_valid_config(self, path: Path) -> dict:
         config = {

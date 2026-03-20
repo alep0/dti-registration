@@ -26,6 +26,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 # ── Fixtures ──────────────────────────────────────────────────────────────────
 
+
 def _write_bval(path: Path, values: list[float]) -> None:
     path.write_text(" ".join(str(v) for v in values) + "\n", encoding="utf-8")
 

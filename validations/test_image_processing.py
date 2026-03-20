@@ -28,6 +28,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
+
 def _make_brain_4d(shape=(10, 10, 10, 5)):
     return np.random.rand(*shape).astype(np.float32)
 
@@ -40,6 +41,7 @@ def _make_mask_3d(shape=(10, 10, 10), fill=1):
     return mask
 
 # ── Tests: _apply_mask ────────────────────────────────────────────────────────
+
 
 class TestApplyMask:
     def test_zeros_outside_mask(self):
