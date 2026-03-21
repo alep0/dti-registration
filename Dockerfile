@@ -30,8 +30,11 @@ ENV PATH="${CONDA_DIR}/bin:${PATH}"
 
 # ── Create conda environment from config/environment.yml ─────────────────────
 COPY config/environment.yml /tmp/environment.yml
-RUN conda env create -f /tmp/environment.yml \
-    && conda clean -afy
+# Acepta los términos de servicio antes de crear el entorno
+RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
+    conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
+    conda env create -f /tmp/environment.yml && \
+    conda clean -afy
 
 # Activate the environment by default
 ENV CONDA_DEFAULT_ENV=dti-registration
