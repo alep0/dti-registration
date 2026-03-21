@@ -19,7 +19,8 @@
 
 set -uo pipefail
 
-readonly SCRIPT_NAME="$(basename "$0")"
+SCRIPT_NAME="$(basename "$0")"
+readonly SCRIPT_NAME
 PASS=0
 FAIL=0
 

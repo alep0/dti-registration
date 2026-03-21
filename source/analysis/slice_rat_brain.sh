@@ -18,9 +18,10 @@
 
 set -euo pipefail
 
-readonly SCRIPT_NAME="$(basename "$0")"
+SCRIPT_NAME="$(basename "$0")"
+readonly SCRIPT_NAME
 readonly REQUIRED_ARGS=3
-readonly OP_SILVIA=1
+#readonly OP_SILVIA=1
 
 log_info()  { echo "[$(date '+%Y-%m-%d %H:%M:%S')] [INFO]  ${SCRIPT_NAME}: $*" | tee -a "$LOG_FILE"; }
 log_error() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] [ERROR] ${SCRIPT_NAME}: $*" | tee -a "$LOG_FILE" >&2; }
@@ -49,7 +50,7 @@ log_info "Slicing rat brain: ${RAT} (${GROUP})"
 
 DATA_DIR="${ROOT_PATH}/data/nifti/${GROUP}"
 OUT_DIR="${ROOT_PATH}/results/pre/sliced_3d_masked/${GROUP}/${RAT}"
-SCRIPT_DIR="${ROOT_PATH}/source"
+#SCRIPT_DIR="${ROOT_PATH}/source"
 
 BRAIN_IN="${DATA_DIR}/${RAT}_HARDI.nii"
 MASK_IN="${DATA_DIR}/${RAT}_HARDI_mask.nii"

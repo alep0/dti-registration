@@ -21,7 +21,8 @@
 set -euo pipefail
 
 # ── Constants ─────────────────────────────────────────────────────────────────
-readonly SCRIPT_NAME="$(basename "$0")"
+SCRIPT_NAME="$(basename "$0")"
+readonly SCRIPT_NAME
 readonly REQUIRED_ARGS=3
 
 # ── Logging ───────────────────────────────────────────────────────────────────
@@ -65,7 +66,7 @@ log_info "fslmaths: $(command -v fslmaths)"
 # ── Derive paths ──────────────────────────────────────────────────────────────
 DATA_PATH="${ROOT_PATH}/data/nifti/${GROUP}"
 OUT_PATH="${ROOT_PATH}/results/pre/${GROUP}/${RAT}"
-CONFIG_PATH="${ROOT_PATH}/config/config.json"
+#CONFIG_PATH="${ROOT_PATH}/config/config.json"
 
 MASK_IN="${DATA_PATH}/${RAT}_HARDI_mask.nii"
 MASK_OUT="${OUT_PATH}/${RAT}_HARDI_mask_eroded.nii.gz"

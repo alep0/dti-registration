@@ -19,7 +19,8 @@
 
 set -uo pipefail
 
-readonly SCRIPT_NAME="$(basename "$0")"
+SCRIPT_NAME="$(basename "$0")"
+readonly SCRIPT_NAME
 SCRIPT="$(dirname "$0")/../source/analysis/mask_erosion.sh"
 PASS=0
 FAIL=0
@@ -56,7 +57,8 @@ fi
 # ── Test 3: fslmaths unavailable ─────────────────────────────────────────────
 log "Test 3: fslmaths not in PATH"
 OLD_PATH="${PATH}"
-export PATH="$(echo "${PATH}" | tr ':' '\n' | grep -iv 'fsl' | paste -sd':')"
+PATH="$(echo "${PATH}" | tr ':' '\n' | grep -iv 'fsl' | paste -sd':')"
+export PATH
 if bash "${SCRIPT}" "t1" "R01" "${ROOT_PATH}" 2>&1 | grep -qi "error\|not found"; then
     pass "Test 3"
 else
