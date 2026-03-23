@@ -113,4 +113,4 @@ jobs:
       - name: Smoke test inside Docker
         run: |
           docker run --rm dti-registration:ci-test \
-            python3 -c "import dipy, numpy; print('Docker smoke test OK')"
+            /opt/conda/envs/dti-registration/bin/python3 -c "import dipy, numpy; print('Docker smoke test OK')"
